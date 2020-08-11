@@ -157,7 +157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 451208, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 451208, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182788119}
   m_LocalRotation: {x: 0.008726558, y: -0, z: -0, w: 0.999962}
-  m_LocalPosition: {x: 0, y: 0.07999995, z: -0.49999988}
+  m_LocalPosition: {x: 0, y: 0.07999995, z: -0.4}
   m_LocalScale: {x: 0.83333385, y: 0.83333325, z: 0.8333337}
   m_Children: []
   m_Father: {fileID: 1893083806}
@@ -493,6 +493,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5406624541826630564, guid: 1cc98b4f3462f424099d38a672ea17a7,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406624541826630564, guid: 1cc98b4f3462f424099d38a672ea17a7,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406624541826630564, guid: 1cc98b4f3462f424099d38a672ea17a7,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5406624541830522648, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
       propertyPath: m_Enabled
@@ -516,12 +531,12 @@ PrefabInstance:
     - target: {fileID: 8624178993977840616, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
       propertyPath: ForwardForce
-      value: 3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8624178993977840616, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
       propertyPath: TurnSpeed
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8624178993977840616, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
@@ -531,7 +546,7 @@ PrefabInstance:
     - target: {fileID: 8624178993977840616, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
       propertyPath: FlapIncrement
-      value: 0.0005
+      value: 0.00005
       objectReference: {fileID: 0}
     - target: {fileID: 8624178993977840616, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}

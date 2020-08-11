@@ -31,15 +31,16 @@ public class PlayerController : MonoBehaviour
     private void ApplyMotionFromInput()
     {
         //forward
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+
+        if (Rigidbody.velocity.z > MaxForwardSpeed)
+        {
+            Rigidbody.AddForce(transform.forward * -ForwardForce);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift))
         {
             Rigidbody.AddForce(transform.forward * ForwardForce);
-
-            //if (Rigidbody.velocity.z > MaxForwardSpeed)
-            //{
-                //Rigidbody.velocity.Set(Rigidbody.velocity.x, Rigidbody.velocity.y, MaxForwardSpeed);
-            //}
         }
+
 
         //turn
         var horizontalInput = Input.GetAxis("Horizontal");
