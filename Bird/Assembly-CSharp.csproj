@@ -69,6 +69,10 @@
     <Compile Include="Assets\living birds\scripts\lb_Bird.cs" />
     <Compile Include="Assets\living birds\scripts\lb_BirdController.cs" />
     <Compile Include="Assets\living birds\scripts\lb_CrowProximity.cs" />
+    <Compile Include="Assets\Scripts\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level.cs" />
+    <Compile Include="Assets\Scripts\Levels\Level1_Movement.cs" />
+    <Compile Include="Assets\Scripts\Levels\LevelStrings.cs" />
     <Compile Include="Assets\Scripts\LevelSelector.cs" />
     <Compile Include="Assets\Scripts\LoadAndSave.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

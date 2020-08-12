@@ -22,6 +22,8 @@ public class LevelSelector : MonoBehaviour
 
     private void SetDropdown()
     {
+        Debug.Log("SetDropdown" + PlayerData.CurrentLevel + " of " + PlayerData.GetCurrentMaxLevel());
+
         dropdown.ClearOptions();
 
         //setup all level names

@@ -25,8 +25,10 @@ public class PlayerController : MonoBehaviour
     {
     }
 
+
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ApplyMotionFromInput();
     }
@@ -92,6 +94,10 @@ public class PlayerController : MonoBehaviour
             if (contactPoint.normal == Vector3.up)
             {
                 SetOnFloor(true);
+            }
+            else
+            {
+
             }
         }
     }

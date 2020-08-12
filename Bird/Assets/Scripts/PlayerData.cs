@@ -5,13 +5,13 @@ using UnityEngine;
 public static class PlayerData
 {
     public static int CurrentLevel; //this does not need saving
-    private const int MaxLevel = 5;
+    private const int MaxLevel = 1; //todo put this back to 5 for continued play;
     private const string CurrentMaxLevel = "CurrentMaxLevel";
     //todo add high score and achievements
 
     public static void LevelCompleted(int level)
     {
-        if (level > GetCurrentMaxLevel() && level < MaxLevel)
+        if (level == GetCurrentMaxLevel() && level < MaxLevel)
         {
             PlayerPrefs.SetInt(CurrentMaxLevel, GetCurrentMaxLevel() + 1);
         }
