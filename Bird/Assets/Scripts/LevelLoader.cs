@@ -11,8 +11,12 @@ public class LevelLoader : MonoBehaviour
         Debug.Log("LevelLoader" + PlayerData.CurrentLevel + " of " + PlayerData.GetCurrentMaxLevel());
         switch (PlayerData.CurrentLevel)
         {
-            default :
+            case 1:
                 gameObject.AddComponent<Level1_Movement>();
+                break;
+            case 2:
+            default:
+                gameObject.AddComponent<Level2_Feeding>();
                 break;
         }
     }

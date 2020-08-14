@@ -5,7 +5,7 @@ using UnityEngine;
 public static class PlayerData
 {
     public static int CurrentLevel; //this does not need saving
-    private const int MaxLevel = 1; //todo put this back to 5 for continued play;
+    private const int MaxLevel = 2; //todo put this back to 5 for continued play;
     private const string CurrentMaxLevel = "CurrentMaxLevel";
     //todo add high score and achievements
 

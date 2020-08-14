@@ -28,9 +28,6 @@ public class Level1_Movement : Level
     // Update is called once per frame
     void Update()
     {
-        //todo remove
-
-        Debug.Log(section);
         switch (section)
         {
             case 0:
@@ -93,12 +90,7 @@ public class Level1_Movement : Level
         {
             section = 5;
             info.text = LevelStrings.LevelOne.Complete;
-            Invoke("Complete", 30);
+            Invoke("Completed", 30);
         }
-    }
-
-    private void Complete()
-    {
-        ReturnToMenu(true);
     }
 }

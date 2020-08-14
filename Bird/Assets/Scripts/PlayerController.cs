@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +17,11 @@ public class PlayerController : MonoBehaviour
     public float SlowFall = 0.3f;
 
 
-    [SerializeField] bool onFloor;
+    [SerializeField] PlayerMoveType movementType;
+    public BeakAndClawStatus currentAction;
+    public GameObject holding = null;
     [SerializeField] Vector3 currentVelocity;
-
+    [SerializeField] FixedJoint joint = null;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +39,8 @@ public class PlayerController : MonoBehaviour
     private void ApplyMotionFromInput()
     {
         //forward
-        float currentForwardMaxSpeed = (onFloor ? 0.5f : 1.0f) * MaxForwardSpeed;
-        float currentForwardForce = (onFloor ? 0.5f : 1.0f) * ForwardForce;
+        float currentForwardMaxSpeed = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * MaxForwardSpeed;
+        float currentForwardForce = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * ForwardForce;
         if (Rigidbody.velocity.z > currentForwardMaxSpeed)
         {
             Rigidbody.AddForce(transform.forward * -currentForwardForce);
@@ -77,33 +80,100 @@ public class PlayerController : MonoBehaviour
     }
 
     //Todo update animations for flying/walking
-    public void SetOnFloor(bool onFloor)
+    public void SetMovementType(PlayerMoveType moveType)
     {
-        if (this.onFloor == onFloor)
+        if (movementType == moveType)
         {
             return;
         }
 
-        this.onFloor = onFloor;
+        movementType = moveType;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         foreach (ContactPoint contactPoint in collision.contacts)
         {
-            if (contactPoint.normal == Vector3.up)
+            if (contactPoint.normal == Vector3.up && collision.rigidbody == null)
             {
-                SetOnFloor(true);
-            }
-            else
-            {
-
+                SetMovementType(PlayerMoveType.Walking);
             }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        SetOnFloor(false);
+        if (collision.rigidbody == null)
+        {
+            SetMovementType(PlayerMoveType.Flying);
+        }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (Input.GetKeyDown(KeyCode.B) && collision.gameObject.tag == BirdSeedController.SeedTag)
+        {
+            SeedActions(collision);
+        }
+    }
+
+    private void SeedActions(Collision collision)
+    {
+        if (currentAction == BeakAndClawStatus.Empty)
+        {
+            BirdSeedController seedScript = collision.gameObject.GetComponent<BirdSeedController>();
+            //We are picking up seed
+            if (seedScript.Lift())
+            {
+                currentAction = BeakAndClawStatus.BeakFull;
+                holding = collision.gameObject;
+
+                joint = gameObject.AddComponent<FixedJoint>();
+                joint.anchor = collision.contacts[0].point;
+                joint.connectedBody = collision.contacts[0].otherCollider.transform.GetComponentInParent<Rigidbody>();
+                joint.massScale = 0;
+                joint.connectedMassScale =0;
+            }
+            else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
+            {
+                StartCoroutine(Eating());
+
+
+            }
+        }
+        else if (currentAction == BeakAndClawStatus.BeakFull)
+        {
+            BirdSeedController seedScript = holding.gameObject.GetComponent<BirdSeedController>();
+
+            seedScript.Drop();
+            currentAction = BeakAndClawStatus.Empty;
+            holding = null;
+            Destroy(joint);
+            joint = null;
+        }
+    }
+
+    IEnumerator Eating()
+    {
+        {
+            currentAction = BeakAndClawStatus.Eating;
+            yield return new WaitForSeconds(5);
+            currentAction = BeakAndClawStatus.Empty;
+        }
+    }
+}
+
+public enum PlayerMoveType
+{
+    Walking,
+    Flying
+}
+
+public enum BeakAndClawStatus
+{
+    Empty,
+    BeakFull,
+    ClawFull,
+    Eating,
+    Washing
 }
