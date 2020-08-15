@@ -131,8 +131,8 @@ public class PlayerController : MonoBehaviour
                 joint = gameObject.AddComponent<FixedJoint>();
                 joint.anchor = collision.contacts[0].point;
                 joint.connectedBody = collision.contacts[0].otherCollider.transform.GetComponentInParent<Rigidbody>();
-                joint.massScale = 0;
-                joint.connectedMassScale =0;
+                joint.massScale = 1/Rigidbody.mass;
+                joint.connectedMassScale = 1/joint.connectedBody.mass;
             }
             else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
             {

@@ -6,7 +6,13 @@ using UnityEngine;
 public class BirdSeedController : MonoBehaviour
 {
     [SerializeField] BirdSeedStatus status;
+    [SerializeField] Rigidbody rigidbody;
+    
     public const string SeedTag = "BirdSeed";
+    public const float Mass = 1.0f;
+    public const float CarryMass = 0.0f;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +36,7 @@ public class BirdSeedController : MonoBehaviour
         if (status == BirdSeedStatus.Full)
         {
             status = BirdSeedStatus.Carried;
-
+            rigidbody.mass = CarryMass;
             return true;
         }
         return false;
@@ -39,6 +45,7 @@ public class BirdSeedController : MonoBehaviour
     public void Drop()
     {
         status = BirdSeedStatus.Full;
+        rigidbody.mass = Mass;
     }
 
 
