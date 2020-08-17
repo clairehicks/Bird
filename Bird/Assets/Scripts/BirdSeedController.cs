@@ -7,8 +7,10 @@ public class BirdSeedController : MonoBehaviour
 {
     [SerializeField] BirdSeedStatus status;
     [SerializeField] Rigidbody rigidbody;
-    
+
     public const string SeedTag = "BirdSeed";
+//    public const string SeedPrefabPath = "Prefabs/seedbox";
+    public const string SeedPrefabPath = "Prefabs/BirdSeed";
     public const float Mass = 1.0f;
     public const float CarryMass = 0.0f;
 
@@ -30,7 +32,7 @@ public class BirdSeedController : MonoBehaviour
     {
         return status;
     }
-    
+
     public bool Lift()
     {
         if (status == BirdSeedStatus.Full)
@@ -63,7 +65,7 @@ public class BirdSeedController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("rel velocity " + collision.relativeVelocity.magnitude);
-        if (status == BirdSeedStatus.Full && collision.rigidbody == null && collision.relativeVelocity.magnitude>0.1)
+        if (status == BirdSeedStatus.Full && collision.rigidbody == null && collision.relativeVelocity.magnitude > 0.1)
         {
             //start spill animation
             status = BirdSeedStatus.Spilled;

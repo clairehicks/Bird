@@ -36,7 +36,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //move bird
         ApplyMotionFromInput();
+
+        //check beak drop
+        if (Input.GetKeyDown(KeyCode.B) && currentAction == BeakAndClawStatus.BeakFull)
+        {
+            Drop();
+        }
     }
 
     private void ApplyMotionFromInput()
@@ -144,18 +151,25 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else if (currentAction == BeakAndClawStatus.BeakFull)
+        else 
         {
-            BirdSeedController seedScript = holding.gameObject.GetComponent<BirdSeedController>();
-
-            seedScript.Drop();
-            currentAction = BeakAndClawStatus.Empty;
-            holding = null;
-            Destroy(joint);
-            joint = null;
+           
         }
     }
 
+
+    private void Drop()
+    {
+        BirdSeedController seedScript = holding.gameObject.GetComponent<BirdSeedController>();
+        if (seedScript != null)
+        {
+            seedScript.Drop();
+        }
+        currentAction = BeakAndClawStatus.Empty;
+        holding = null;
+        Destroy(joint);
+        joint = null;
+    }
     IEnumerator Eating()
     {
         {

@@ -29,7 +29,7 @@ public class Level3_AdvancedFeeding : Level
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
-        GameObject foodPrefab = Resources.Load<GameObject>("Prefabs/BirdSeed");
+        GameObject foodPrefab = Resources.Load<GameObject>(BirdSeedController.SeedPrefabPath);
         seedBoxes.Add(Instantiate(foodPrefab, FoodPosition1, FoodRotation).GetComponent<BirdSeedController>());
         seedBoxes.Add(Instantiate(foodPrefab, FoodPosition2, FoodRotation).GetComponent<BirdSeedController>());
     }
