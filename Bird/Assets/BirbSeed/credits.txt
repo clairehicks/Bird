@@ -1,0 +1,17 @@
+https://cc0.link/a/Paper002
+		CC0 (Practically the same as public domain. Attribution appreciated but not required.)
+
+https://commons.wikimedia.org/wiki/File:Budgerigar_diagram-labeled.svg
+		CC BY-SA 3.0 (Attribution required; licence applies to entire texture)
+
+Liberation Sans
+		SIL OFL (copyleft, but the requirement to maintain the licence does not extend to "any document created using the fonts")
+
+https://www.pexels.com/photo/peanuts-41959/ (close enough...)
+		CC0
+
+URW Chancery L
+		(Not actually sure but pretty sure it's cool)
+		
+Roboto Condensed
+		Apache 2.0 (But basically it's a font)
