@@ -63,7 +63,6 @@ public class Level2_Feeding : Level
         }
     }
 
-    float timeCount = 0;
     IEnumerator Intro()
     {
         info.text = LevelStrings.LevelTwo.Welcome;

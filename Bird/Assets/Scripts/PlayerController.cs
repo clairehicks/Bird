@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public const string CanUseClaw= "CanUseClaw";
+
     public Rigidbody Rigidbody;
+    public CageDoorController CageDoorController;
     public float TurnSpeed = 10f;
     public float ForwardForce = 3f;
     public float MaxForwardSpeed = 5f;

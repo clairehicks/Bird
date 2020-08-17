@@ -15,8 +15,11 @@ public class LevelLoader : MonoBehaviour
                 gameObject.AddComponent<Level1_Movement>();
                 break;
             case 2:
-            default:
                 gameObject.AddComponent<Level2_Feeding>();
+                break;
+            case 3:
+            default:
+                gameObject.AddComponent<Level3_AdvancedFeeding>();
                 break;
         }
     }
