@@ -9,8 +9,8 @@ public class BirdSeedController : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
 
     public const string SeedTag = "BirdSeed";
-//    public const string SeedPrefabPath = "Prefabs/seedbox";
-    public const string SeedPrefabPath = "Prefabs/BirdSeed";
+    public const string SeedPrefabPath = "Prefabs/seedbox";
+//    public const string SeedPrefabPath = "Prefabs/BirdSeed";
     public const float Mass = 1.0f;
     public const float CarryMass = 0.0f;
 

@@ -16,9 +16,7 @@ public class Level1_Movement : Level
     //close bedroom door and put bird on chair
     void Start()
     {
-        Animator bedroomDoor = GameObject.Find("BedroomDoor").GetComponent<Animator>();
-        bedroomDoor.enabled = true;
-        bedroomDoor.SetBool(animBoolName + "1", false);
+        CloseDoor("BedroomDoor");
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
         info = GameObject.Find("Info").GetComponent<TMP_Text>();

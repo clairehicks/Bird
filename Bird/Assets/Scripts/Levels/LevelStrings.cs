@@ -29,9 +29,9 @@ public static class LevelStrings
         public const string Welcome = "You are feeling hungry again, luckily your person has hidden food in the top drawers.";
         public const string OpenCage = "First things first, use your beak to open your cage door.";
         public const string LeaveCage = "Now fly through the open door to explore the bedroom.";
-        public const string OpenDrawer = "Fly to the drawers under your cage and use \"C\" to open the drawer with your claws.";
+        public const string OpenDrawer = "Fly to the drawers under your cage and use \"C\" to open the top left drawer with your claws.";
         public const string Eat = "A box of seed, go ahead and eat it.";
-        public const string Again = "You're still hungry. Use your claws again to open the next drawer then eat some more seed.";
+        public const string Again = "You're still hungry. Use your claws again to open the top middle drawer then eat some more seed.";
         public const string Complete = "That's better! You are now ready to leave the bedroom";
     }
 

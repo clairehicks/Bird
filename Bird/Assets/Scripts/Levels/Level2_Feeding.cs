@@ -22,9 +22,7 @@ public class Level2_Feeding : Level
     // add food to both bedside tables
     void Start()
     {
-        Animator bedroomDoor = GameObject.Find("BedroomDoor").GetComponent<Animator>();
-        bedroomDoor.enabled = true;
-        bedroomDoor.SetBool(animBoolName + "1", false);
+        CloseDoor("BedroomDoor");
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
         info = GameObject.Find("Info").GetComponent<TMP_Text>();

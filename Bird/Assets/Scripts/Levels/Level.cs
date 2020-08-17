@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,22 @@ public class Level : MonoBehaviour
     {
         Player = GameObject.Find("Player");
         PlayerController = Player.GetComponent<PlayerController>();
+    }
+
+    public void CloseDoor(string doorName)
+    {
+        Animator door = GameObject.Find(doorName).GetComponent<Animator>();
+        door.speed = float.MaxValue;
+        door.enabled = true;
+        door.SetBool(animBoolName + "1", false);
+
+        StartCoroutine("Disable",door);
+    }
+
+    private IEnumerator Disable(Animator door)
+    {
+        yield return new WaitForEndOfFrame();
+        door.enabled = false;
     }
 
     private void Update()

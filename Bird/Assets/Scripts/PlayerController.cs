@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public const string CanUseClaw= "CanUseClaw";
+    public const string CanUseClaw = "CanUseClaw";
+    public const string animBoolName = "isOpen_Obj_";
 
     public Rigidbody Rigidbody;
     public CageDoorController CageDoorController;
@@ -121,9 +122,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (Input.GetKeyDown(KeyCode.B) && collision.gameObject.tag == BirdSeedController.SeedTag)
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            SeedActions(collision);
+            if (collision.gameObject.tag == BirdSeedController.SeedTag)
+            {
+                SeedActions(collision);
+            }
+            else if (collision.gameObject == CageDoorController.gameObject)
+            {
+                CageDoorController.Use(CageDoorController.State.Open);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ClawActions(collision);
         }
     }
 
@@ -141,8 +154,8 @@ public class PlayerController : MonoBehaviour
                 joint = gameObject.AddComponent<FixedJoint>();
                 joint.anchor = collision.contacts[0].point;
                 joint.connectedBody = collision.contacts[0].otherCollider.transform.GetComponentInParent<Rigidbody>();
-                joint.massScale = 1/Rigidbody.mass;
-                joint.connectedMassScale = 1/joint.connectedBody.mass;
+                joint.massScale = 1 / Rigidbody.mass;
+                joint.connectedMassScale = 1 / joint.connectedBody.mass;
             }
             else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
             {
@@ -151,12 +164,21 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else 
-        {
-           
-        }
     }
 
+    private void ClawActions(Collision collision)
+    {
+        MoveableObject moveable = collision.gameObject.GetComponent<MoveableObject>();
+
+        if (moveable == null) { return; }
+
+        Animator anim = moveable.GetComponentInParent<Animator>();
+
+        if (anim == null) { return; }
+
+        string nameOfAnim = animBoolName + moveable.objectNumber;
+        anim.SetBool(nameOfAnim, !anim.GetBool(nameOfAnim));
+    }
 
     private void Drop()
     {

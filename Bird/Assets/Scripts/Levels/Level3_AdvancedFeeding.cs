@@ -15,15 +15,14 @@ public class Level3_AdvancedFeeding : Level
     private int section = 0;
     private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
+    private CageDoorController cageDoor;
 
     // Start is called before the first frame update
     // close bedroom door and put bird on chair
     // add food to two drawers
     void Start()
     {
-        Animator bedroomDoor = GameObject.Find("BedroomDoor").GetComponent<Animator>();
-        bedroomDoor.enabled = true;
-        bedroomDoor.SetBool(animBoolName + "1", false);
+        CloseDoor("BedroomDoor");
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
@@ -32,6 +31,8 @@ public class Level3_AdvancedFeeding : Level
         GameObject foodPrefab = Resources.Load<GameObject>(BirdSeedController.SeedPrefabPath);
         seedBoxes.Add(Instantiate(foodPrefab, FoodPosition1, FoodRotation).GetComponent<BirdSeedController>());
         seedBoxes.Add(Instantiate(foodPrefab, FoodPosition2, FoodRotation).GetComponent<BirdSeedController>());
+
+        cageDoor = GameObject.Find("tuere").GetComponent<CageDoorController>();
     }
 
     // Update is called once per frame
@@ -75,7 +76,7 @@ public class Level3_AdvancedFeeding : Level
 
     private void OpenedCage()
     {
-        //todo
+        if(cageDoor.GetState()== CageDoorController.State.Open)
         {
             section = 2;
             info.text = LevelStrings.LevelThree.LeaveCage;
@@ -84,7 +85,7 @@ public class Level3_AdvancedFeeding : Level
 
     private void Escape()
     {
-        //todo
+        if(Player.transform.position.x > 1.3)
         {
             section = 3;
             info.text = LevelStrings.LevelThree.OpenDrawer;
