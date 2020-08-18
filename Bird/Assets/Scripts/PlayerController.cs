@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (collision.gameObject == CageDoorController.gameObject)
             {
-                CageDoorController.Use(CageDoorController.State.Open);
+                CageDoorController.Open();
             }
         }
 

@@ -759,6 +759,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: hamsterCage
       objectReference: {fileID: 0}
+    - target: {fileID: 8141547054754995173, guid: bba46d3184f62e242987716a06a713b6,
+        type: 3}
+      propertyPath: m_Limits.bounceMinVelocity
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8141547054754995173, guid: bba46d3184f62e242987716a06a713b6,
+        type: 3}
+      propertyPath: m_Limits.max
+      value: 175
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bba46d3184f62e242987716a06a713b6, type: 3}
 --- !u!1001 &5406624542563908954
