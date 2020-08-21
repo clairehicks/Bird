@@ -10,16 +10,17 @@ public class Level3_AdvancedFeeding : Level
     private static readonly Quaternion StartRotation = Quaternion.Euler(new Vector3(0, -90, 0));
     private static readonly Vector3 FoodPosition1 = new Vector3(1.8f, 0.8636171f, -3.7f);
     private static readonly Vector3 FoodPosition2 = new Vector3(2.23f, 0.8636171f, -3.7f);
-    private static readonly Quaternion FoodRotation = Quaternion.Euler(new Vector3(90,0, 0));
-    
+    private static readonly Quaternion FoodRotation = Quaternion.Euler(new Vector3(90, 0, 0));
+
     private int section = 0;
     private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
     private CageDoorController cageDoor;
+    private Animator drawerAnimator;
 
     // Start is called before the first frame update
     // close bedroom door and put bird on chair
-    // add food to two drawers
+    // add food to two drawers using a fixed joint
     void Start()
     {
         CloseDoor("BedroomDoor");
@@ -28,11 +29,13 @@ public class Level3_AdvancedFeeding : Level
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
-        GameObject foodPrefab = Resources.Load<GameObject>(BirdSeedController.SeedPrefabPath);
-        seedBoxes.Add(Instantiate(foodPrefab, FoodPosition1, FoodRotation).GetComponent<BirdSeedController>());
-        seedBoxes.Add(Instantiate(foodPrefab, FoodPosition2, FoodRotation).GetComponent<BirdSeedController>());
-
+        seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation, "bed_draw01"));
+        seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation, "bed_draw02"));
         cageDoor = GameObject.Find("tuere").GetComponent<CageDoorController>();
+        drawerAnimator = GameObject.Find("PFB_ChestOfDraws").GetComponent<Animator>();
+        //todo remove
+        //drawerAnimator.SetBool(PlayerController.animBoolName + 1, true);
+        //drawerAnimator.enabled = true;
     }
 
     // Update is called once per frame
@@ -76,7 +79,7 @@ public class Level3_AdvancedFeeding : Level
 
     private void OpenedCage()
     {
-        if(cageDoor.GetState()== CageDoorController.State.Open)
+        if (cageDoor.GetState() == CageDoorController.State.Open)
         {
             section = 2;
             info.text = LevelStrings.LevelThree.LeaveCage;
@@ -85,7 +88,7 @@ public class Level3_AdvancedFeeding : Level
 
     private void Escape()
     {
-        if(Player.transform.position.x > 1.3)
+        if (Player.transform.position.x > 1.3)
         {
             section = 3;
             info.text = LevelStrings.LevelThree.OpenDrawer;
@@ -93,7 +96,7 @@ public class Level3_AdvancedFeeding : Level
     }
     private void OpenDrawer()
     {
-        if (GetPlayerStatus() == BeakAndClawStatus.BeakFull && GetTagFromHolding() == PlayerController.CanUseClaw)
+        if (drawerAnimator.GetBool(PlayerController.animBoolName + 1))
         {
             section = 4;
             info.text = LevelStrings.LevelThree.Eat;
@@ -111,7 +114,7 @@ public class Level3_AdvancedFeeding : Level
 
     private void Eaten()
     {
-        if (GetPlayerStatus() == BeakAndClawStatus.Eating)
+        if (GetPlayerStatus() == BeakAndClawStatus.Empty)
         {
             section = 6;
             info.text = LevelStrings.LevelThree.Again;

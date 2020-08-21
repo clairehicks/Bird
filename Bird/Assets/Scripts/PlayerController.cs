@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -25,26 +26,23 @@ public class PlayerController : MonoBehaviour
     public BeakAndClawStatus currentAction;
     public GameObject holding = null;
     [SerializeField] Vector3 currentVelocity;
-    [SerializeField] FixedJoint joint = null;
 
     // Start is called before the first frame update
     void Start()
     {
     }
 
-
-
     // Update is called once per frame
     void FixedUpdate()
     {
-        //move bird
-        ApplyMotionFromInput();
-
         //check beak drop
         if (Input.GetKeyDown(KeyCode.B) && currentAction == BeakAndClawStatus.BeakFull)
         {
             Drop();
         }
+
+        //move bird
+        ApplyMotionFromInput();
     }
 
     private void ApplyMotionFromInput()
@@ -103,6 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Enter");
         foreach (ContactPoint contactPoint in collision.contacts)
         {
             if (contactPoint.normal == Vector3.up && collision.rigidbody == null)
@@ -122,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        Debug.Log("Stay");
+
         if (Input.GetKeyDown(KeyCode.B))
         {
             if (collision.gameObject.tag == BirdSeedController.SeedTag)
@@ -150,26 +151,24 @@ public class PlayerController : MonoBehaviour
             {
                 currentAction = BeakAndClawStatus.BeakFull;
                 holding = collision.gameObject;
-
-                joint = gameObject.AddComponent<FixedJoint>();
-                joint.anchor = collision.contacts[0].point;
-                joint.connectedBody = collision.contacts[0].otherCollider.transform.GetComponentInParent<Rigidbody>();
-                joint.massScale = 1 / Rigidbody.mass;
-                joint.connectedMassScale = 1 / joint.connectedBody.mass;
+                holding.transform.parent = gameObject.transform;
+                Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>());
             }
             else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
             {
                 StartCoroutine(Eating());
-
-
             }
         }
     }
 
     private void ClawActions(Collision collision)
     {
-        MoveableObject moveable = collision.gameObject.GetComponent<MoveableObject>();
+        if (collision.gameObject.CompareTag(CanUseClaw))
+        {
+            return;
+        }
 
+        MoveableObject moveable = collision.gameObject.GetComponent<MoveableObject>();
         if (moveable == null) { return; }
 
         Animator anim = moveable.GetComponentInParent<Animator>();
@@ -178,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
         string nameOfAnim = animBoolName + moveable.objectNumber;
         anim.SetBool(nameOfAnim, !anim.GetBool(nameOfAnim));
+        anim.enabled = true;
     }
 
     private void Drop()
@@ -188,9 +188,9 @@ public class PlayerController : MonoBehaviour
             seedScript.Drop();
         }
         currentAction = BeakAndClawStatus.Empty;
+        holding.transform.parent = null;
+        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>(),false);
         holding = null;
-        Destroy(joint);
-        joint = null;
     }
     IEnumerator Eating()
     {

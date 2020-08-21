@@ -17,13 +17,12 @@ public class LevelLoader : MonoBehaviour
             case 2:
                 gameObject.AddComponent<Level2_Feeding>();
                 break;
-            case 3:
             default:
+            case 3:
                 gameObject.AddComponent<Level3_AdvancedFeeding>();
                 break;
         }
     }
-
     // Update is called once per frame
     void Update()
     {

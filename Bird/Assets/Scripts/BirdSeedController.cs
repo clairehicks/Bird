@@ -10,16 +10,11 @@ public class BirdSeedController : MonoBehaviour
 
     public const string SeedTag = "BirdSeed";
     public const string SeedPrefabPath = "Prefabs/seedbox";
-//    public const string SeedPrefabPath = "Prefabs/BirdSeed";
-    public const float Mass = 1.0f;
-    public const float CarryMass = 0.0f;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-
+        status = BirdSeedStatus.Full;
     }
 
     // Update is called once per frame
@@ -38,7 +33,7 @@ public class BirdSeedController : MonoBehaviour
         if (status == BirdSeedStatus.Full)
         {
             status = BirdSeedStatus.Carried;
-            rigidbody.mass = CarryMass;
+            rigidbody.isKinematic = true;
             return true;
         }
         return false;
@@ -47,7 +42,7 @@ public class BirdSeedController : MonoBehaviour
     public void Drop()
     {
         status = BirdSeedStatus.Full;
-        rigidbody.mass = Mass;
+        rigidbody.isKinematic = false;
     }
 
 
