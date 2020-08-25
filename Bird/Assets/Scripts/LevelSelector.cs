@@ -31,7 +31,7 @@ public class LevelSelector : MonoBehaviour
         allLevels.Add(new TMP_Dropdown.OptionData("Level 1: Learn to fly"));
         allLevels.Add(new TMP_Dropdown.OptionData("Level 2: Eating seed"));
         allLevels.Add(new TMP_Dropdown.OptionData("Level 3: Open the door"));
-        allLevels.Add(new TMP_Dropdown.OptionData("Level 4: Time to wash"));
+        //allLevels.Add(new TMP_Dropdown.OptionData("Level 4: Time to wash"));
         allLevels.Add(new TMP_Dropdown.OptionData("Level 5: Free to explore"));
 
         for (int i = allLevels.Count-1; i >= currentMaxLevel ; i--)

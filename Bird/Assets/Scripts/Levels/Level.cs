@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
     private PlayerController PlayerController;
     public const string animBoolName = "isOpen_Obj_";
     private GameObject foodPrefab;
+    public bool FailOnStarving = true;
 
     private void Awake()
     {
@@ -29,10 +30,15 @@ public class Level : MonoBehaviour
         //todo hunger check
     }
 
-    public BirdSeedController CreateBox(Vector3 position, Quaternion rotation, string doorOrDrawer)
+    public BirdSeedController CreateBox(Vector3 position, Quaternion rotation, string doorOrDrawer, int suffix)
     {
-        GameObject parent = GameObject.Find(doorOrDrawer);
-        var box = parent!=null? Instantiate(foodPrefab, position, rotation, parent.transform): Instantiate(foodPrefab, position, rotation);
+        GameObject parent = doorOrDrawer != null ? GameObject.Find(doorOrDrawer) : null;
+        var box = parent != null ? Instantiate(foodPrefab, position, rotation, parent.transform) : Instantiate(foodPrefab, position, rotation);
+        box.name = "seedbox" + suffix;
+        if (parent == null)
+        {
+            box.GetComponent<Rigidbody>().isKinematic = false;
+        }
         return box.GetComponent<BirdSeedController>();
     }
 

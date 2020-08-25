@@ -17,9 +17,12 @@ public class LevelLoader : MonoBehaviour
             case 2:
                 gameObject.AddComponent<Level2_Feeding>();
                 break;
-            default:
             case 3:
                 gameObject.AddComponent<Level3_AdvancedFeeding>();
+                break;
+            default:
+            case 5:
+                gameObject.AddComponent<Level5_FreePlay>();
                 break;
         }
     }

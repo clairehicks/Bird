@@ -16,6 +16,7 @@ public class Level1_Movement : Level
     //close bedroom door and put bird on chair
     void Start()
     {
+        FailOnStarving = false;
         CloseDoor("BedroomDoor");
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);

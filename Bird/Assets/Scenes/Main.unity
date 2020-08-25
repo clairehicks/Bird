@@ -191,9 +191,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: bed_draw01
       objectReference: {fileID: 0}
+    - target: {fileID: 1000011913007176, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
+      propertyPath: m_Name
+      value: bed_draw06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012020562184, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
+      propertyPath: m_Name
+      value: k_draw03
+      objectReference: {fileID: 0}
     - target: {fileID: 1000012057688272, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
       propertyPath: m_TagString
       value: CanUseClaw
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012522557728, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
+      propertyPath: m_Name
+      value: bed_draw03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012536442754, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
+      propertyPath: m_Name
+      value: side1_draw
       objectReference: {fileID: 0}
     - target: {fileID: 1000013137690254, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
       propertyPath: m_TagString

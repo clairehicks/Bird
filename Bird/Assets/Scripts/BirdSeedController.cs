@@ -7,6 +7,7 @@ public class BirdSeedController : MonoBehaviour
 {
     [SerializeField] BirdSeedStatus status;
     [SerializeField] Rigidbody rigidbody;
+    [SerializeField] ParticleSystem particleSystem;
 
     public const string SeedTag = "BirdSeed";
     public const string SeedPrefabPath = "Prefabs/seedbox";
@@ -59,15 +60,23 @@ public class BirdSeedController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("rel velocity " + collision.relativeVelocity.magnitude);
         if (status == BirdSeedStatus.Full && collision.rigidbody == null && collision.relativeVelocity.magnitude > 0.1)
         {
             //start spill animation
             status = BirdSeedStatus.Spilled;
+            SeedDrop();
         }
     }
 
+    IEnumerator SeedDrop()
+    {
+        particleSystem.Play();
+        yield return new WaitForSeconds(2);
+        particleSystem.Pause();
+    }
+
 }
+
 
 public enum BirdSeedStatus
 {

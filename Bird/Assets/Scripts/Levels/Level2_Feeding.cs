@@ -12,7 +12,7 @@ public class Level2_Feeding : Level
     private static readonly Vector3 FoodPosition2 = new Vector3(4.15f, 0.7360903f, -9.0f);
     private static readonly Quaternion FoodRotation1 = Quaternion.Euler(new Vector3(0, 5, 0));
     private static readonly Quaternion FoodRotation2 = Quaternion.Euler(new Vector3(0, 89, 0));
-    
+
     private int section = 0;
     private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
@@ -28,9 +28,8 @@ public class Level2_Feeding : Level
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
-        GameObject foodPrefab = Resources.Load<GameObject>(BirdSeedController.SeedPrefabPath);
-        seedBoxes.Add(Instantiate(foodPrefab, FoodPosition1, FoodRotation1).GetComponent<BirdSeedController>());
-        seedBoxes.Add(Instantiate(foodPrefab, FoodPosition2, FoodRotation2).GetComponent<BirdSeedController>());
+        seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation1, null, 1));
+        seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation2, null, 2));
     }
 
     // Update is called once per frame
@@ -71,7 +70,7 @@ public class Level2_Feeding : Level
 
     private void GotBox()
     {
-        if(GetPlayerStatus()== BeakAndClawStatus.BeakFull && GetTagFromHolding() == BirdSeedController.SeedTag)
+        if (GetPlayerStatus() == BeakAndClawStatus.BeakFull && GetTagFromHolding() == BirdSeedController.SeedTag)
         {
             section = 2;
             info.text = LevelStrings.LevelTwo.DropBox;

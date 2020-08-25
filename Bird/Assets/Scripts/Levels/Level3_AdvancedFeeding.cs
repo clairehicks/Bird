@@ -29,8 +29,8 @@ public class Level3_AdvancedFeeding : Level
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
-        seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation, "bed_draw01"));
-        seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation, "bed_draw02"));
+        seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation, "bed_draw01", 1));
+        seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation, "bed_draw02", 2));
         cageDoor = GameObject.Find("tuere").GetComponent<CageDoorController>();
         drawerAnimator = GameObject.Find("PFB_ChestOfDraws").GetComponent<Animator>();
         //todo remove
