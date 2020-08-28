@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status: 0
   rigidbody: {fileID: 54568394412004118}
-  particleSystem: {fileID: 0}
+  particleSystem: {fileID: 2976483277447404485}
 --- !u!65 &65185734308300478
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2000
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2

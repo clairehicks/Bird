@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody Rigidbody;
     public CageDoorController CageDoorController;
+    public lb_Bird animationClass;
     public float TurnSpeed = 10f;
     public float ForwardForce = 3f;
     public float MaxForwardSpeed = 5f;
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float SlowFall = 0.3f;
 
 
-    [SerializeField] PlayerMoveType movementType;
+    [SerializeField] PlayerMoveType movementType = PlayerMoveType.Walking;
     public BeakAndClawStatus currentAction;
     public GameObject holding = null;
     [SerializeField] Vector3 currentVelocity;
@@ -97,11 +98,20 @@ public class PlayerController : MonoBehaviour
         }
 
         movementType = moveType;
+
+        switch (movementType)
+        {
+            case PlayerMoveType.Flying:
+                animationClass.TakeOff();
+                break;
+            case PlayerMoveType.Walking:
+                animationClass.Land();
+                break;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Enter");
         foreach (ContactPoint contactPoint in collision.contacts)
         {
             if (contactPoint.normal == Vector3.up && collision.rigidbody == null)
@@ -121,8 +131,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Stay");
-
         if (Input.GetKeyDown(KeyCode.B))
         {
             if (collision.gameObject.tag == BirdSeedController.SeedTag)
@@ -196,6 +204,7 @@ public class PlayerController : MonoBehaviour
     {
         {
             currentAction = BeakAndClawStatus.Eating;
+            StartCoroutine(animationClass.Eat());
             yield return new WaitForSeconds(BirdSeedController.EatingTime);
             currentAction = BeakAndClawStatus.Empty;
         }
