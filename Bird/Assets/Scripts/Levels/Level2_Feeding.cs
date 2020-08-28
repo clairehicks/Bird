@@ -14,7 +14,6 @@ public class Level2_Feeding : Level
     private static readonly Quaternion FoodRotation2 = Quaternion.Euler(new Vector3(0, 89, 0));
 
     private int section = 0;
-    private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
 
     // Start is called before the first frame update
@@ -23,9 +22,12 @@ public class Level2_Feeding : Level
     void Start()
     {
         CloseDoor("BedroomDoor");
+        hungerBar.gameObject.SetActive(false);
+        hungerText.SetActive(false);
+        hungerBar.drainHealth = false;
+        hungerBar.SetHealth(50.0f);
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
-        info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
         seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation1, null, 1));
@@ -95,7 +97,9 @@ public class Level2_Feeding : Level
         {
             section = 4;
             info.text = LevelStrings.LevelTwo.FoodBar;
-            //todo turn on hunger bar
+            hungerText.SetActive(true);
+            hungerBar.gameObject.SetActive(true);
+            hungerBar.drainHealth = true;
         }
     }
 

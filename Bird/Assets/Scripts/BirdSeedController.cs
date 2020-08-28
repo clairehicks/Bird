@@ -8,18 +8,18 @@ public class BirdSeedController : MonoBehaviour
     [SerializeField] BirdSeedStatus status;
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] ParticleSystem particleSystem;
+    [SerializeField] Healthbar hunger;
 
     public const string SeedTag = "BirdSeed";
     public const string SeedPrefabPath = "Prefabs/seedbox";
     public const int DropTime = 2;
     public const int EatingTime = 3;
 
-    
-
     // Start is called before the first frame update
     void Start()
     {
         status = BirdSeedStatus.Full;
+        hunger = GameObject.Find("HungerBar").GetComponent<Healthbar>();
     }
 
     // Update is called once per frame
@@ -58,6 +58,7 @@ public class BirdSeedController : MonoBehaviour
         {
             status = BirdSeedStatus.Empty;
             particleSystem.Play();
+            hunger.GainHealth(50.0f);
             return true;
         }
         return false;

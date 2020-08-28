@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using UnityEngine;
-
-//todo check all box placement - some are under house
 
 public class Level5_FreePlay : Level
 {
@@ -28,7 +27,6 @@ public class Level5_FreePlay : Level
     private static readonly Quaternion FoodRotationUpright2 = Quaternion.Euler(new Vector3(0, 89, 0));
 
 
-    private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
 
     // Start is called before the first frame update
@@ -37,7 +35,6 @@ public class Level5_FreePlay : Level
     {
         FailOnStarving = false;
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
-        info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
         seedBoxes.Add(CreateBox(BedroomFoodPosition1, FoodRotationFlat2, "bed_draw01", 1));
@@ -56,6 +53,11 @@ public class Level5_FreePlay : Level
     void Update()
     {
 
+    }
+
+    public override string CalculateStats()
+    {
+        return string.Format(LevelStrings.LevelFive.CompleteStats, TimeSpan.FromSeconds(Time.timeSinceLevelLoad).ToString(@"mm\:ss"), seedBoxes.Count(box => box.GetStatus() == BirdSeedStatus.Empty));
     }
 
     IEnumerator Intro()

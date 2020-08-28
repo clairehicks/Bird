@@ -13,7 +13,6 @@ public class Level3_AdvancedFeeding : Level
     private static readonly Quaternion FoodRotation = Quaternion.Euler(new Vector3(90, 0, 0));
 
     private int section = 0;
-    private TMP_Text info;
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
     private CageDoorController cageDoor;
     private Animator drawerAnimator;
@@ -26,16 +25,14 @@ public class Level3_AdvancedFeeding : Level
         CloseDoor("BedroomDoor");
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
-        info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
 
         seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation, "bed_draw01", 1));
         seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation, "bed_draw02", 2));
         cageDoor = GameObject.Find("tuere").GetComponent<CageDoorController>();
         drawerAnimator = GameObject.Find("PFB_ChestOfDraws").GetComponent<Animator>();
-        //todo remove
-        //drawerAnimator.SetBool(PlayerController.animBoolName + 1, true);
-        //drawerAnimator.enabled = true;
+        hungerBar.drainHealth = false;
+        hungerBar.SetHealth(50.0f);
     }
 
     // Update is called once per frame
@@ -108,6 +105,7 @@ public class Level3_AdvancedFeeding : Level
         if (GetPlayerStatus() == BeakAndClawStatus.Eating)
         {
             section = 5;
+            hungerBar.drainHealth = true;
             //do not change the message this time
         }
     }

@@ -10,7 +10,6 @@ public class Level1_Movement : Level
     private static readonly Quaternion StartRotation = Quaternion.Euler(new Vector3(0, 32, 0));
 
     private int section = 0;
-    private TMP_Text info;
 
     // Start is called before the first frame update
     //close bedroom door and put bird on chair
@@ -18,9 +17,11 @@ public class Level1_Movement : Level
     {
         FailOnStarving = false;
         CloseDoor("BedroomDoor");
+        hungerBar.gameObject.SetActive(false);
+        hungerBar.drainHealth = false;
+        hungerText.SetActive(false);
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
-        info = GameObject.Find("Info").GetComponent<TMP_Text>();
         StartCoroutine(Intro());
     }
 

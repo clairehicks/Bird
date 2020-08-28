@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float MaxFlapSpeed = 5f;
     public float FlapIncrement = 0.005f;
     public float SlowFall = 0.3f;
+    public Healthbar hunger;
 
 
     [SerializeField] PlayerMoveType movementType = PlayerMoveType.Walking;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Rigidbody.AddForce(Vector3.up * FlapForce);
+        hunger.healthPerSecond = 0.1f + FlapForce;
 
         //cap vertical speed
         if (Rigidbody.velocity.y < -MaxFlapSpeed)
@@ -197,7 +199,7 @@ public class PlayerController : MonoBehaviour
         }
         currentAction = BeakAndClawStatus.Empty;
         holding.transform.parent = null;
-        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>(),false);
+        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>(), false);
         holding = null;
     }
     IEnumerator Eating()

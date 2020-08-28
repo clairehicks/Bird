@@ -42,6 +42,6 @@ public static class LevelStrings
     {
         public const string Welcome = "Now that you know all about being a bird, you are ready to explore the house.";
         public const string Food = "Remember to look for hidden food to keep up your energy.";
-        public const string CompleteStats = "You explored for {0} seconds and found {1} boxes of food on this adventure";
+        public const string CompleteStats = "You explored for {0} and ate {1} boxes of food on this adventure";
     }
 }
