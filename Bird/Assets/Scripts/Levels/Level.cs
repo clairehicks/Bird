@@ -32,12 +32,18 @@ public class Level : MonoBehaviour
 
     public BirdSeedController CreateBox(Vector3 position, Quaternion rotation, string doorOrDrawer, int suffix)
     {
+        Debug.Log(string.Format("Creating box {0} at ({1}: {2}) in {3}", suffix, position, rotation, doorOrDrawer));
         GameObject parent = doorOrDrawer != null ? GameObject.Find(doorOrDrawer) : null;
-        var box = parent != null ? Instantiate(foodPrefab, position, rotation, parent.transform) : Instantiate(foodPrefab, position, rotation);
+        //var box = parent != null ? Instantiate(foodPrefab, position, rotation, parent.transform) : Instantiate(foodPrefab, position, rotation);
+        var box = Instantiate(foodPrefab, position, rotation);
         box.name = "seedbox" + suffix;
         if (parent == null)
         {
             box.GetComponent<Rigidbody>().isKinematic = false;
+        }
+        else
+        {
+            box.transform.SetParent(parent.transform, false);
         }
         return box.GetComponent<BirdSeedController>();
     }

@@ -20,7 +20,7 @@ public class Level3_AdvancedFeeding : Level
 
     // Start is called before the first frame update
     // close bedroom door and put bird on chair
-    // add food to two drawers using a fixed joint
+    // add food to two drawers.
     void Start()
     {
         CloseDoor("BedroomDoor");

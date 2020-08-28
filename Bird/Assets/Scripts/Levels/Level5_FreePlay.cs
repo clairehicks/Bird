@@ -11,8 +11,8 @@ public class Level5_FreePlay : Level
     private static readonly Vector3 StartPosition = new Vector3(2.0f, 1.484119f, -3.6f);
     private static readonly Quaternion StartRotation = Quaternion.Euler(new Vector3(0, -90, 0));
 
-    private static readonly Vector3 BedroomFoodPosition1 = new Vector3(1.8f, 0.8636171f, -3.7f);
-    private static readonly Vector3 BedroomFoodPosition2 = new Vector3(-0.9f, 0.8636171f, -3.7f);
+    private static readonly Vector3 BedroomFoodPosition1 = new Vector3(0.1f, 04582069f, 0.0f);
+    private static readonly Vector3 BedroomFoodPosition2 = new Vector3(-0.9f, 0.3181914f, 0.0f);
     private static readonly Vector3 BedroomFoodPosition3 = new Vector3(0.2f, -0.04777834f, 0.01f);
     private static readonly Vector3 BedroomFoodPosition4 = new Vector3(0.0f, -0.02233437f, 0.07f);
     private static readonly Vector3 BedroomFoodPosition5 = new Vector3(2.0f, 0.1551253f, -3.8f);
@@ -32,8 +32,7 @@ public class Level5_FreePlay : Level
     private List<BirdSeedController> seedBoxes = new List<BirdSeedController>();
 
     // Start is called before the first frame update
-    // close bedroom door and put bird on chair
-    // add food to two drawers using a fixed joint
+    // add food to ten places
     void Start()
     {
         FailOnStarving = false;
@@ -42,8 +41,7 @@ public class Level5_FreePlay : Level
         StartCoroutine(Intro());
 
         seedBoxes.Add(CreateBox(BedroomFoodPosition1, FoodRotationFlat2, "bed_draw01", 1));
-        seedBoxes.Add(CreateBox(BedroomFoodPosition2, FoodRotationFlat2, "bed_draw03", 2));
-//        seedBoxes.Add(CreateBox(BedroomFoodPosition2, FoodRotationFlat1, "bed_draw03", 2));
+        seedBoxes.Add(CreateBox(BedroomFoodPosition2, FoodRotationFlat1, "bed_draw03", 2));
         seedBoxes.Add(CreateBox(BedroomFoodPosition3, FoodRotationFlat1, "bed_draw06", 3));
         seedBoxes.Add(CreateBox(BedroomFoodPosition4, FoodRotationFlat2, "side1_draw", 4));
         seedBoxes.Add(CreateBox(BedroomFoodPosition5, FoodRotationFlat2, null, 5)); //under drawers
