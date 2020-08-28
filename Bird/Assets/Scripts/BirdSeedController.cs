@@ -11,6 +11,10 @@ public class BirdSeedController : MonoBehaviour
 
     public const string SeedTag = "BirdSeed";
     public const string SeedPrefabPath = "Prefabs/seedbox";
+    public const int DropTime = 2;
+    public const int EatingTime = 3;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +57,7 @@ public class BirdSeedController : MonoBehaviour
         if (status == BirdSeedStatus.Spilled)
         {
             status = BirdSeedStatus.Empty;
+            particleSystem.Play();
             return true;
         }
         return false;
@@ -64,14 +69,14 @@ public class BirdSeedController : MonoBehaviour
         {
             //start spill animation
             status = BirdSeedStatus.Spilled;
-            SeedDrop();
+            StartCoroutine(SeedDrop());
         }
     }
 
     IEnumerator SeedDrop()
     {
         particleSystem.Play();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(DropTime);
         particleSystem.Pause();
     }
 

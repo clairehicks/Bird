@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
     {
         {
             currentAction = BeakAndClawStatus.Eating;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(BirdSeedController.EatingTime);
             currentAction = BeakAndClawStatus.Empty;
         }
     }
