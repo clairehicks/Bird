@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,9 @@ public class Healthbar : MonoBehaviour {
 
     // Visible health bar ui:
     private Slider healthbarDisplay;
+    [SerializeField] GameObject background;
+    [SerializeField] GameObject slider;
+    [SerializeField] GameObject title;
 
     [Header("Main Variables:")]
     // Health variable: (default range: 0-100)
@@ -24,6 +28,20 @@ public class Healthbar : MonoBehaviour {
 
     // If the character has this health or less, consider them having low health:
     [Tooltip("Low health is less than or equal to this:")] public int lowHealth = 33;
+
+    internal void Hide()
+    {
+        background.SetActive(false);
+        slider.SetActive(false);
+        title.SetActive(false);
+    }
+
+    internal void Show()
+    {
+        background.SetActive(true);
+        slider.SetActive(true);
+        title.SetActive(true);
+    }
 
     // If the character has between this health and "low health", consider them having medium health:
     // If they have more than this health, consider them having highHealth:

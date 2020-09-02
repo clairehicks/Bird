@@ -57,7 +57,12 @@ public class Level5_FreePlay : Level
 
     public override string CalculateStats()
     {
-        return string.Format(LevelStrings.LevelFive.CompleteStats, TimeSpan.FromSeconds(Time.timeSinceLevelLoad).ToString(@"mm\:ss"), seedBoxes.Count(box => box.GetStatus() == BirdSeedStatus.Empty));
+        var duration = Time.timeSinceLevelLoad;
+        var boxes = seedBoxes.Select(b => b.GetStatus() == BirdSeedStatus.Empty);
+
+        PlayerData.UpdateStats(boxes.ToArray(), duration);
+
+        return string.Format(LevelStrings.LevelFive.CompleteStats, TimeSpan.FromSeconds(duration).ToString(@"mm\:ss"), boxes.Count(box => box == true));
     }
 
     IEnumerator Intro()

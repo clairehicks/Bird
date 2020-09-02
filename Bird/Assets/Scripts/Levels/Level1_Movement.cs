@@ -17,9 +17,8 @@ public class Level1_Movement : Level
     {
         FailOnStarving = false;
         CloseDoor("BedroomDoor");
-        hungerBar.gameObject.SetActive(false);
+        hungerBar.Hide();
         hungerBar.drainHealth = false;
-        hungerText.SetActive(false);
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
         StartCoroutine(Intro());

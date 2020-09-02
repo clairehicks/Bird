@@ -13,7 +13,6 @@ public class Level : MonoBehaviour
     private GameObject foodPrefab;
     public bool FailOnStarving = true;
     public Healthbar hungerBar;
-    public GameObject hungerText;
     public TMP_Text info;
 
     private void Awake()
@@ -22,7 +21,6 @@ public class Level : MonoBehaviour
         hungerBar = GameObject.Find("HungerBar").GetComponent<Healthbar>();
         PlayerController = Player.GetComponent<PlayerController>();
         foodPrefab = Resources.Load<GameObject>(BirdSeedController.SeedPrefabPath);
-        hungerText = GameObject.Find("HungerLabel");
         info = GameObject.Find("Info").GetComponent<TMP_Text>();
     }
 

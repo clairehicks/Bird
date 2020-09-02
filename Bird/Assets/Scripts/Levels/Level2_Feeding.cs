@@ -22,8 +22,7 @@ public class Level2_Feeding : Level
     void Start()
     {
         CloseDoor("BedroomDoor");
-        hungerBar.gameObject.SetActive(false);
-        hungerText.SetActive(false);
+        hungerBar.Hide();
         hungerBar.drainHealth = false;
         hungerBar.SetHealth(50.0f);
 
@@ -97,8 +96,7 @@ public class Level2_Feeding : Level
         {
             section = 4;
             info.text = LevelStrings.LevelTwo.FoodBar;
-            hungerText.SetActive(true);
-            hungerBar.gameObject.SetActive(true);
+            hungerBar.Show();
             hungerBar.drainHealth = true;
         }
     }
