@@ -1255,6 +1255,11 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 5406624541821123768, guid: 1cc98b4f3462f424099d38a672ea17a7,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5406624541826604932, guid: 1cc98b4f3462f424099d38a672ea17a7,
         type: 3}
       propertyPath: m_Name
