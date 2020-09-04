@@ -9,6 +9,7 @@ public class BirdSeedController : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] Healthbar hunger;
+    [SerializeField] AudioSource audio;
 
     public const string SeedTag = "BirdSeed";
     public const string SeedPrefabPath = "Prefabs/seedbox";
@@ -76,6 +77,7 @@ public class BirdSeedController : MonoBehaviour
 
     IEnumerator SeedDrop()
     {
+        audio.Play();
         particleSystem.Play();
         yield return new WaitForSeconds(DropTime);
         particleSystem.Pause();

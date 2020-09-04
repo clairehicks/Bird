@@ -16,9 +16,10 @@ public static class PlayerData
 
     public static void LevelCompleted(int level)
     {
-        if (level == GetCurrentMaxLevel() && level < MaxLevel)
+        if (level == PlayerPrefs.GetInt(CurrentMaxLevel) && level < MaxLevel)
         {
-            PlayerPrefs.SetInt(CurrentMaxLevel, GetCurrentMaxLevel() + 1);
+            PlayerPrefs.SetInt(CurrentMaxLevel, level + 1);
+            PlayerPrefs.Save();
         }
     }
 
@@ -43,11 +44,12 @@ public static class PlayerData
         PlayerPrefs.SetInt(FoodFoundString, Math.Max(PlayerPrefs.GetInt(FoodFoundString), foodFound.Count(b => b == true)));
         PlayerPrefs.SetFloat(BestTimeString, Math.Max(PlayerPrefs.GetFloat(BestTimeString), duration));
         PlayerPrefs.SetFloat(CumalativeTimeString, PlayerPrefs.GetFloat(CumalativeTimeString) + duration);
+        PlayerPrefs.Save();
     }
 
     public static int GetFoodFoundEver()
     {
-        return SplitFoodFoundEverArray().Count(b=>b == true);
+        return SplitFoodFoundEverArray().Count(b => b == true);
     }
 
     public static int GetFoodFound()
@@ -85,5 +87,6 @@ public static class PlayerData
         PlayerPrefs.SetFloat(CumalativeTimeString, 0);
         PlayerPrefs.SetInt(FoodFoundString, 0);
         PlayerPrefs.SetString(FoodFoundEverString, string.Join(",", new bool[MostFood] { false, false, false, false, false, false, false, false, false, false }));
+        PlayerPrefs.Save();
     }
 }

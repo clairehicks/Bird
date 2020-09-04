@@ -23,22 +23,30 @@ public class PlayerController : MonoBehaviour
     public float SlowFall = 0.3f;
     public Healthbar hunger;
 
+    public bool UpDownEnabled = true;
+    public bool ForwardEnabled = true;
+    public bool TurnEnabled = true;
+    public bool BeakEnabled = true;
+    public bool ClawEnabled = true;
+    public bool AllActionsDisabled = false;
 
     [SerializeField] PlayerMoveType movementType = PlayerMoveType.Walking;
     public BeakAndClawStatus currentAction;
     public GameObject holding = null;
     [SerializeField] Vector3 currentVelocity;
+    private BoxCollider collider;
 
     // Start is called before the first frame update
     void Start()
     {
+        collider = gameObject.GetComponents<BoxCollider>().First(c => !c.isTrigger);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //check beak drop
-        if (Input.GetKeyDown(KeyCode.B) && currentAction == BeakAndClawStatus.BeakFull)
+        if (Input.GetKeyDown(KeyCode.B) && currentAction == BeakAndClawStatus.BeakFull && !AllActionsDisabled && BeakEnabled)
         {
             Drop();
         }
@@ -49,34 +57,47 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMotionFromInput()
     {
-        //forward
-        float currentForwardMaxSpeed = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * MaxForwardSpeed;
-        float currentForwardForce = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * ForwardForce;
-        if (Rigidbody.velocity.z > currentForwardMaxSpeed)
+        if (AllActionsDisabled)
         {
-            Rigidbody.AddForce(transform.forward * -currentForwardForce);
-        }
-        else if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Rigidbody.AddForce(transform.forward * currentForwardForce);
+            return;
         }
 
+        //forward
+        if (ForwardEnabled)
+        {
+            float currentForwardMaxSpeed = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * MaxForwardSpeed;
+            float currentForwardForce = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * ForwardForce;
+            if (Rigidbody.velocity.z > currentForwardMaxSpeed)
+            {
+                Rigidbody.AddForce(transform.forward * -currentForwardForce);
+            }
+            else if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Rigidbody.AddForce(transform.forward * currentForwardForce);
+            }
+        }
 
         //turn
-        var horizontalInput = Input.GetAxis("Horizontal");
-        transform.Rotate(Vector3.up, Time.deltaTime * TurnSpeed * horizontalInput);
+        if (TurnEnabled)
+        {
+            var horizontalInput = Input.GetAxis("Horizontal");
+            transform.Rotate(Vector3.up, Time.deltaTime * TurnSpeed * horizontalInput);
+        }
 
         //apply flap force
-        var verticalInput = Input.GetAxis("Vertical");
-        FlapForce += verticalInput * 0.01f;
+        if (UpDownEnabled)
+        {
+            var verticalInput = Input.GetAxis("Vertical");
+            FlapForce += verticalInput * 0.01f;
 
-        if (FlapForce > MaxFlapForce)
-        {
-            FlapForce = MaxFlapForce;
-        }
-        else if (FlapForce < 0)
-        {
-            FlapForce = 0;
+            if (FlapForce > MaxFlapForce)
+            {
+                FlapForce = MaxFlapForce;
+            }
+            else if (FlapForce < 0)
+            {
+                FlapForce = 0;
+            }
         }
 
         Rigidbody.AddForce(Vector3.up * FlapForce);
@@ -133,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && !AllActionsDisabled && BeakEnabled)
         {
             if (collision.gameObject.tag == BirdSeedController.SeedTag)
             {
@@ -145,7 +166,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !AllActionsDisabled && ClawEnabled)
         {
             ClawActions(collision);
         }
@@ -159,10 +180,10 @@ public class PlayerController : MonoBehaviour
             //We are picking up seed
             if (seedScript.Lift())
             {
-                currentAction = BeakAndClawStatus.BeakFull;
+                SetAction(BeakAndClawStatus.BeakFull);
                 holding = collision.gameObject;
                 holding.transform.parent = gameObject.transform;
-                Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>());
+                Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), collider);
             }
             else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
             {
@@ -197,22 +218,28 @@ public class PlayerController : MonoBehaviour
         {
             seedScript.Drop();
         }
-        currentAction = BeakAndClawStatus.Empty;
+        SetAction(BeakAndClawStatus.Empty);
         holding.transform.parent = null;
-        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), gameObject.GetComponent<SphereCollider>(), false);
+        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), collider, false);
         holding = null;
     }
     IEnumerator Eating()
     {
         {
-            currentAction = BeakAndClawStatus.Eating;
+            SetAction(BeakAndClawStatus.Eating);
+            AllActionsDisabled = true;
             StartCoroutine(animationClass.Eat());
             yield return new WaitForSeconds(BirdSeedController.EatingTime);
-            currentAction = BeakAndClawStatus.Empty;
+            SetAction(BeakAndClawStatus.Empty);
+            AllActionsDisabled = false;
         }
     }
-}
 
+    private void SetAction(BeakAndClawStatus status)
+    {
+        currentAction = status;
+    }
+}
 public enum PlayerMoveType
 {
     Walking,
@@ -225,5 +252,4 @@ public enum BeakAndClawStatus
     BeakFull,
     ClawFull,
     Eating,
-    Washing
 }

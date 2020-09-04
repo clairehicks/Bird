@@ -102,4 +102,18 @@ public class Level : MonoBehaviour
     {
         return PlayerController.holding.tag;
     }
+
+    public void SetEnabledKeys(bool motion, bool beak, bool claw)
+    {
+        SetEnabledKeys(motion, motion, motion, beak, claw);
+    }
+
+    public void SetEnabledKeys(bool upDown, bool leftRight, bool forwards, bool beak, bool claw)
+    {
+        PlayerController.UpDownEnabled = upDown;
+        PlayerController.TurnEnabled = leftRight;
+        PlayerController.ForwardEnabled = forwards;
+        PlayerController.BeakEnabled = beak;
+        PlayerController.ClawEnabled = claw;
+    }
 }

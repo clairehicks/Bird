@@ -12,13 +12,15 @@ public class Level1_Movement : Level
     private int section = 0;
 
     // Start is called before the first frame update
-    //close bedroom door and put bird on chair
+    //close bedroom door and put bird on chair disable movement individually
     void Start()
     {
         FailOnStarving = false;
         CloseDoor("BedroomDoor");
         hungerBar.Hide();
         hungerBar.drainHealth = false;
+
+        SetEnabledKeys(false, false, false);
 
         Player.transform.SetPositionAndRotation(StartPosition, StartRotation);
         StartCoroutine(Intro());
@@ -54,6 +56,7 @@ public class Level1_Movement : Level
         yield return new WaitForSeconds(5);
         section = 1;
         info.text = LevelStrings.LevelOne.Flap;
+        SetEnabledKeys(true, false, false, false, false);
     }
 
     private void Flap1()
@@ -71,6 +74,7 @@ public class Level1_Movement : Level
         {
             section = 3;
             info.text = LevelStrings.LevelOne.Forward;
+            SetEnabledKeys(true, false, true, false, false);
         }
     }
 
@@ -80,6 +84,7 @@ public class Level1_Movement : Level
         {
             section = 4;
             info.text = LevelStrings.LevelOne.Turn;
+            SetEnabledKeys(true, false, false);
         }
     }
 

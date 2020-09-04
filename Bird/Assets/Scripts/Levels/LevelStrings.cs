@@ -35,7 +35,7 @@ public static class LevelStrings
         public const string Complete = "That's better! You are now ready to leave the bedroom";
     }
 
-    public const string Failure = "Oh no, you are too hungry, lets try this again.";
+    public const string Failure = "Oh no, you are too hungry, let's try this again.";
 
     //todo add level four bathing and add bathing stats to five
     public static class LevelFive

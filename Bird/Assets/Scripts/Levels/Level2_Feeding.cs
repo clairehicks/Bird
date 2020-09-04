@@ -18,7 +18,7 @@ public class Level2_Feeding : Level
 
     // Start is called before the first frame update
     // close bedroom door and put bird on chair
-    // add food to both bedside tables
+    // add food to both bedside tables disable claw
     void Start()
     {
         CloseDoor("BedroomDoor");
@@ -31,6 +31,7 @@ public class Level2_Feeding : Level
 
         seedBoxes.Add(CreateBox(FoodPosition1, FoodRotation1, null, 1));
         seedBoxes.Add(CreateBox(FoodPosition2, FoodRotation2, null, 2));
+        SetEnabledKeys(true, true, false);
     }
 
     // Update is called once per frame

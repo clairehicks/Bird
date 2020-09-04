@@ -27,17 +27,13 @@ public class LevelSelector : MonoBehaviour
         dropdown.ClearOptions();
 
         //setup all level names
-        allLevels = new List<TMP_Dropdown.OptionData>();
-        allLevels.Add(new TMP_Dropdown.OptionData("Level 1: Learn to fly"));
-        allLevels.Add(new TMP_Dropdown.OptionData("Level 2: Eating seed"));
-        allLevels.Add(new TMP_Dropdown.OptionData("Level 3: Open the door"));
-        allLevels.Add(new TMP_Dropdown.OptionData("Free to explore"));
+        allLevels = new List<TMP_Dropdown.OptionData> {
+        new TMP_Dropdown.OptionData("Level 1: Learn to fly"),
+        new TMP_Dropdown.OptionData("Level 2: Eating seed"),
+        new TMP_Dropdown.OptionData("Level 3: Open the door"),
+        new TMP_Dropdown.OptionData("Free to explore")};
 
-        for (int i = allLevels.Count-1; i >= currentMaxLevel ; i--)
-        {
-            allLevels.Remove(allLevels[i]);
-        }
-        dropdown.AddOptions(allLevels);
+        dropdown.AddOptions(allLevels.GetRange(0, currentMaxLevel));
 
         PlayerData.CurrentLevel = currentMaxLevel;
         dropdown.SetValueWithoutNotify(currentMaxLevel);

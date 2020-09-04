@@ -18,6 +18,7 @@ public class lb_Bird : MonoBehaviour
     public AudioClip song2;
     public AudioClip flyAway1;
     public AudioClip flyAway2;
+    public BeakAndClawStatus beakAndClawStatus;
 
     Animator anim;
     public Rigidbody rb;
@@ -110,7 +111,7 @@ public class lb_Bird : MonoBehaviour
     void OnGroundBehaviors()
     {
         idle = anim.GetCurrentAnimatorStateInfo(0).nameHash == idleAnimationHash;
-        if (idle)
+        if (idle && beakAndClawStatus==BeakAndClawStatus.Empty)
         {
             //the bird is in the idle animation, lets randomly choose a behavior every 3 seconds
             if (Random.value < Time.deltaTime * .33)
