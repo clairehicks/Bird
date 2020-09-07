@@ -8,8 +8,8 @@ public class Level3_AdvancedFeeding : Level
     public GameObject BedroomDoor;
     private static readonly Vector3 StartPosition = new Vector3(2.0f, 1.484119f, -3.6f);
     private static readonly Quaternion StartRotation = Quaternion.Euler(new Vector3(0, -90, 0));
-    private static readonly Vector3 FoodPosition1 = new Vector3(1.8f, 0.8636171f, -3.7f);
-    private static readonly Vector3 FoodPosition2 = new Vector3(2.23f, 0.8636171f, -3.7f);
+    private static readonly Vector3 FoodPosition1 = new Vector3(0.0f, -0.04582069f, 0.0f);
+    private static readonly Vector3 FoodPosition2 = new Vector3(-0.4f, 0.1356329f, 0.0f);
     private static readonly Quaternion FoodRotation = Quaternion.Euler(new Vector3(90, 0, 0));
 
     private int section = 0;

@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelSelector : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class LevelSelector : MonoBehaviour
     [SerializeField] int currentMaxLevel;
     TMP_Dropdown dropdown;
     [SerializeField] ScoreLoader scoreLoader;
+    [SerializeField] TMP_Text DifficultyTitle;
+    [SerializeField] Slider DifficultySlider;
+    private const int FREE_PLAY = 3;
 
     void Start()
     {
@@ -48,13 +52,24 @@ public class LevelSelector : MonoBehaviour
     public void ResetProgress()
     {
         PlayerData.ClearData();
-        currentMaxLevel = PlayerData.GetCurrentMaxLevel();
-        SetDropdown();
+        SceneManager.LoadScene("Menu");
+
+    }
+
+    public void ShowHideDifficulty()
+    {
+        bool show = dropdown.value == FREE_PLAY;
+        DifficultySlider.gameObject.SetActive(show);
+        DifficultyTitle.enabled = show;
     }
 
     public void LoadLevel()
     {
         PlayerData.CurrentLevel = dropdown.value + 1;
+        if (dropdown.value == FREE_PLAY)
+        {
+            PlayerData.Difficulty = DifficultySlider.value;
+        }
         SceneManager.LoadScene("Main");
     }
 }

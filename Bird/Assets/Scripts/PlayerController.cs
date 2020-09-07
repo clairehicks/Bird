@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
     public CageDoorController CageDoorController;
     public lb_Bird animationClass;
     public float TurnSpeed = 10f;
-    public float ForwardForce = 3f;
-    public float MaxForwardSpeed = 5f;
+    public float ForwardForce = 2f;
+    public float MaxForwardSpeed = 4f;
+    public float HopDistance = 0.01f;
 
     public float FlapForce = 0f;
     public float MaxFlapForce = 0.6f;
@@ -65,15 +66,23 @@ public class PlayerController : MonoBehaviour
         //forward
         if (ForwardEnabled)
         {
-            float currentForwardMaxSpeed = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * MaxForwardSpeed;
-            float currentForwardForce = (movementType == PlayerMoveType.Walking ? 0.5f : 1.0f) * ForwardForce;
-            if (Rigidbody.velocity.z > currentForwardMaxSpeed)
+            if (movementType == PlayerMoveType.Flying)
             {
-                Rigidbody.AddForce(transform.forward * -currentForwardForce);
-            }
-            else if (Input.GetKey(KeyCode.LeftShift))
+                float currentForwardMaxSpeed = MaxForwardSpeed;
+                float currentForwardForce = ForwardForce;
+                if (Rigidbody.velocity.z > currentForwardMaxSpeed)
+                {
+                    Rigidbody.AddForce(transform.forward * -currentForwardForce);
+                }
+                else if (Input.GetKey(KeyCode.Space))
+                {
+                    Rigidbody.AddForce(transform.forward * currentForwardForce);
+                }
+            }else if (Input.GetKey(KeyCode.Space))
             {
-                Rigidbody.AddForce(transform.forward * currentForwardForce);
+                //hop
+                animationClass.Hop();
+                gameObject.transform.Translate(Vector3.forward * HopDistance);
             }
         }
 
@@ -101,7 +110,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Rigidbody.AddForce(Vector3.up * FlapForce);
-        hunger.healthPerSecond = 0.1f + FlapForce;
+        hunger.healthPerSecond = 0.1f + FlapForce*PlayerData.Difficulty;
 
         //cap vertical speed
         if (Rigidbody.velocity.y < -MaxFlapSpeed)
@@ -238,6 +247,7 @@ public class PlayerController : MonoBehaviour
     private void SetAction(BeakAndClawStatus status)
     {
         currentAction = status;
+        animationClass.beakAndClawStatus = currentAction;
     }
 }
 public enum PlayerMoveType

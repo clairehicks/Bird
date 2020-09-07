@@ -13,6 +13,7 @@ public static class PlayerData
     private const string FoodFoundEverString = "FoodFoundEver";
     private const string BestTimeString = "BestTime";
     private const string CumalativeTimeString = "CumalativeTime";
+    public static float Difficulty;
 
     public static void LevelCompleted(int level)
     {
@@ -72,6 +73,9 @@ public static class PlayerData
 
     public static int GetCurrentMaxLevel()
     {
+        //todo remove
+        return 4;
+
         if (!PlayerPrefs.HasKey(CurrentMaxLevel))
         {
             ClearData();

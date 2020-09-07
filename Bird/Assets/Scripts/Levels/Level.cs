@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,9 +13,11 @@ public class Level : MonoBehaviour
     public bool FailOnStarving = true;
     public Healthbar hungerBar;
     public TMP_Text info;
+    private bool calculatingStats = false;
 
     private void Awake()
     {
+        Time.timeScale = 1;
         Player = GameObject.Find("Player");
         hungerBar = GameObject.Find("HungerBar").GetComponent<Healthbar>();
         PlayerController = Player.GetComponent<PlayerController>();
@@ -34,7 +35,8 @@ public class Level : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (hungerBar.health > 0) { return; }
+        if (hungerBar.health > 0 || calculatingStats) { return; }
+        calculatingStats = true;
         //bird is hungry so end level
         StartCoroutine(EndLevel());
     }
@@ -43,7 +45,7 @@ public class Level : MonoBehaviour
     {
         Time.timeScale = 0;
         info.text = FailOnStarving ? LevelStrings.Failure : CalculateStats();
-        yield return new WaitForSecondsRealtime(10.0f);
+        yield return new WaitForSecondsRealtime(3.0f);
 
         if (FailOnStarving)
         {

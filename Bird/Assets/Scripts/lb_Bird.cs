@@ -110,7 +110,8 @@ public class lb_Bird : MonoBehaviour
 
     void OnGroundBehaviors()
     {
-        idle = anim.GetCurrentAnimatorStateInfo(0).nameHash == idleAnimationHash;
+        idle = anim.GetCurrentAnimatorStateInfo(0).nameHash == idleAnimationHash ;
+
         if (idle && beakAndClawStatus==BeakAndClawStatus.Empty)
         {
             //the bird is in the idle animation, lets randomly choose a behavior every 3 seconds

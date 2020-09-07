@@ -8,7 +8,6 @@ public class LevelLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("LevelLoader" + PlayerData.CurrentLevel + " of " + PlayerData.GetCurrentMaxLevel());
         switch (PlayerData.CurrentLevel)
         {
             case 1:

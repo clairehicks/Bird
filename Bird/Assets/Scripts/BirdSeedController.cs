@@ -15,6 +15,7 @@ public class BirdSeedController : MonoBehaviour
     public const string SeedPrefabPath = "Prefabs/seedbox";
     public const int DropTime = 2;
     public const int EatingTime = 3;
+    public const float SeedFill = 100f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +60,7 @@ public class BirdSeedController : MonoBehaviour
         {
             status = BirdSeedStatus.Empty;
             particleSystem.Play();
-            hunger.GainHealth(50.0f);
+            hunger.GainHealth(SeedFill/PlayerData.Difficulty);
             return true;
         }
         return false;
@@ -77,6 +78,7 @@ public class BirdSeedController : MonoBehaviour
 
     IEnumerator SeedDrop()
     {
+        audio.Stop();
         audio.Play();
         particleSystem.Play();
         yield return new WaitForSeconds(DropTime);

@@ -133,13 +133,6 @@ public class Healthbar : MonoBehaviour {
         UpdateHealth();
     }
 
-    public void TakeDamage(int amount)
-    {
-        // Remove 'amount' hitpoints, then update the characters health:
-        health -= float.Parse(amount.ToString());
-        UpdateHealth();
-    }
-
     public void ChangeHealthbarColor(Color colorToChangeTo)
     {
         transform.Find("Bar").GetComponent<Image>().color = colorToChangeTo;
