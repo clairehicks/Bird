@@ -78,13 +78,11 @@ public class BirdSeedController : MonoBehaviour
 
     IEnumerator SeedDrop()
     {
-        audio.Stop();
         audio.Play();
         particleSystem.Play();
         yield return new WaitForSeconds(DropTime);
         particleSystem.Pause();
     }
-
 }
 
 

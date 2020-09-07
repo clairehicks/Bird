@@ -992,6 +992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMaxLevel: 1
   scoreLoader: {fileID: 0}
+  DifficultyTitle: {fileID: 0}
+  DifficultySlider: {fileID: 0}
 --- !u!114 &504455107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1716,6 +1718,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMaxLevel: 1
   scoreLoader: {fileID: 1130107333}
+  DifficultyTitle: {fileID: 504455107}
+  DifficultySlider: {fileID: 1838516363}
 --- !u!1 &899022263
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,6 +4187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMaxLevel: 1
   scoreLoader: {fileID: 0}
+  DifficultyTitle: {fileID: 0}
+  DifficultySlider: {fileID: 0}
 --- !u!1 &1922500302
 GameObject:
   m_ObjectHideFlags: 0

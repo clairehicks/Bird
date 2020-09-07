@@ -41,6 +41,7 @@ public class LevelSelector : MonoBehaviour
 
         PlayerData.CurrentLevel = currentMaxLevel;
         dropdown.SetValueWithoutNotify(currentMaxLevel);
+        ShowHideDifficulty();
     }
 
     // Update is called once per frame
