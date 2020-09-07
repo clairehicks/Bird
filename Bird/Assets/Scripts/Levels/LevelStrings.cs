@@ -16,7 +16,7 @@ public static class LevelStrings
     {
         public const string Welcome = "Oh look, your person left the bird seed out.";
         public const string GetBox = "Fly to the box and use \"B\" to pick it up with your beak.";
-        public const string DropBox = "This box is heavy, find a nice clear spot and use \"B\" again to drop it.";
+        public const string DropBox = "This box is heavy, find a nice clear spot and use \"N\" to drop it.";
         public const string Eat = "Oh look, seed fell out! Land next to the box and use \"B\" to eat the seed.";
         public const string FoodBar = "You need energy to fly, eating seed fills up your energy bar";
         public const string FoodBar2 = "There is another box in this room, make sure you eat again before your energy runs out. ";

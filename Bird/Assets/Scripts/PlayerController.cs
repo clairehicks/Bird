@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //check beak drop
-        if (Input.GetKeyDown(KeyCode.B) && currentAction == BeakAndClawStatus.BeakFull && !AllActionsDisabled && BeakEnabled)
+        if (Input.GetKeyDown(KeyCode.N) && currentAction == BeakAndClawStatus.BeakFull && !AllActionsDisabled && BeakEnabled)
         {
             Drop();
         }
