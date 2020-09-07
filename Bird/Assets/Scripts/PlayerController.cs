@@ -122,7 +122,6 @@ public class PlayerController : MonoBehaviour
         currentVelocity = Rigidbody.velocity;
     }
 
-    //Todo update animations for flying/walking
     public void SetMovementType(PlayerMoveType moveType)
     {
         if (movementType == moveType)
@@ -145,18 +144,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        foreach (ContactPoint contactPoint in collision.contacts)
-        {
-            if (contactPoint.thisCollider == FeetCollider)
+            if (collision.contacts.Any(c => c.thisCollider == FeetCollider))
             {
                 SetMovementType(PlayerMoveType.Walking);
             }
-        }
+        
     }
-
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.rigidbody == null)
+        if (!collision.contacts.Any(c=>c.thisCollider == FeetCollider))
         {
             SetMovementType(PlayerMoveType.Flying);
         }
