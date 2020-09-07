@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public const string CanUseClaw = "CanUseClaw";
     public const string animBoolName = "isOpen_Obj_";
+    [SerializeField] BoxCollider FeetCollider;
 
     public Rigidbody Rigidbody;
     public CageDoorController CageDoorController;
@@ -146,7 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach (ContactPoint contactPoint in collision.contacts)
         {
-            if (contactPoint.normal == Vector3.up && collision.rigidbody == null)
+            if (contactPoint.thisCollider == FeetCollider)
             {
                 SetMovementType(PlayerMoveType.Walking);
             }
