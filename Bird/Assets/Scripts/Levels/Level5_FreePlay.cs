@@ -10,7 +10,7 @@ public class Level5_FreePlay : Level
     private static readonly Vector3 StartPosition = new Vector3(2.0f, 1.484119f, -3.6f);
     private static readonly Quaternion StartRotation = Quaternion.Euler(new Vector3(0, -90, 0));
 
-    private static readonly Vector3 BedroomFoodPosition1 = new Vector3(0.1f, 04582069f, 0.0f);
+    private static readonly Vector3 BedroomFoodPosition1 = new Vector3(0.1f, -0.04582069f, 0.0f);
     private static readonly Vector3 BedroomFoodPosition2 = new Vector3(-0.9f, 0.3181914f, 0.0f);
     private static readonly Vector3 BedroomFoodPosition3 = new Vector3(0.2f, -0.04777834f, 0.01f);
     private static readonly Vector3 BedroomFoodPosition4 = new Vector3(0.0f, -0.02233437f, 0.07f);
