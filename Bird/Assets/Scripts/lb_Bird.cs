@@ -28,7 +28,6 @@ public class lb_Bird : MonoBehaviour
     bool flying = false;
     bool landing = false;
     bool onGround = true;
-    BoxCollider birdCollider;
     float agitationLevel = .5f;
     float originalAnimSpeed = 1.0f;
 
@@ -44,7 +43,6 @@ public class lb_Bird : MonoBehaviour
 
     void OnEnable()
     {
-        birdCollider = gameObject.GetComponent<BoxCollider>();
         anim = gameObject.GetComponent<Animator>();
 
         idleAnimationHash = Animator.StringToHash("Base Layer.Idle");

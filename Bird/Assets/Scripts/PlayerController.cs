@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float ForwardForce = 2f;
     public float MaxForwardSpeed = 4f;
     public float HopDistance = 0.01f;
+    public Collider footCollider;
 
     public float FlapForce = 0f;
     public float MaxFlapForce = 0.6f;
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviour
 
         //move bird
         ApplyMotionFromInput();
+
+        //hack to stop bird falling over
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
     }
 
     private void ApplyMotionFromInput()
@@ -79,7 +83,8 @@ public class PlayerController : MonoBehaviour
                 {
                     Rigidbody.AddForce(transform.forward * currentForwardForce);
                 }
-            }else if (Input.GetKey(KeyCode.Space))
+            }
+            else if (Input.GetKey(KeyCode.Space))
             {
                 //hop
                 animationClass.Hop();
@@ -111,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Rigidbody.AddForce(Vector3.up * FlapForce);
-        hunger.healthPerSecond = 0.1f + FlapForce*PlayerData.Difficulty;
+        hunger.healthPerSecond = 0.1f + FlapForce * PlayerData.Difficulty;
 
         //cap vertical speed
         if (Rigidbody.velocity.y < -MaxFlapSpeed)
@@ -142,31 +147,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-            if (collision.contacts.Any(c => c.thisCollider == FeetCollider))
-            {
-                SetMovementType(PlayerMoveType.Walking);
-            }
-        
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (!collision.contacts.Any(c=>c.thisCollider == FeetCollider))
-        {
-            SetMovementType(PlayerMoveType.Flying);
-        }
-    }
 
-    private void OnCollisionStay(Collision collision)
+
+
+    private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(KeyCode.B) && !AllActionsDisabled && BeakEnabled)
         {
-            if (collision.gameObject.tag == BirdSeedController.SeedTag)
+            if (other.tag == BirdSeedController.SeedTag)
             {
-                SeedActions(collision);
+                SeedActions(other.gameObject);
             }
-            else if (collision.gameObject == CageDoorController.gameObject)
+            else if (other.gameObject == CageDoorController.gameObject)
             {
                 CageDoorController.Open();
             }
@@ -174,22 +166,23 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C) && !AllActionsDisabled && ClawEnabled)
         {
-            ClawActions(collision);
+            ClawActions(other.gameObject);
         }
     }
 
-    private void SeedActions(Collision collision)
+    private void SeedActions(GameObject other)
     {
         if (currentAction == BeakAndClawStatus.Empty)
         {
-            BirdSeedController seedScript = collision.gameObject.GetComponent<BirdSeedController>();
+            BirdSeedController seedScript = other.GetComponent<BirdSeedController>();
             //We are picking up seed
             if (seedScript.Lift())
             {
                 SetAction(BeakAndClawStatus.BeakFull);
-                holding = collision.gameObject;
+                holding = other;
                 holding.transform.parent = gameObject.transform;
                 Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), collider);
+                Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), footCollider);
             }
             else if (movementType == PlayerMoveType.Walking && seedScript.Eat())
             {
@@ -198,14 +191,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ClawActions(Collision collision)
+    private void ClawActions(GameObject other)
     {
-        if (collision.gameObject.CompareTag(CanUseClaw))
+        if (other.CompareTag(CanUseClaw))
         {
             return;
         }
 
-        MoveableObject moveable = collision.gameObject.GetComponent<MoveableObject>();
+        MoveableObject moveable = other.GetComponent<MoveableObject>();
         if (moveable == null) { return; }
 
         Animator anim = moveable.GetComponentInParent<Animator>();
@@ -227,6 +220,7 @@ public class PlayerController : MonoBehaviour
         SetAction(BeakAndClawStatus.Empty);
         holding.transform.parent = null;
         Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), collider, false);
+        Physics.IgnoreCollision(holding.GetComponents<Collider>().First(x => !x.isTrigger), footCollider, false);
         holding = null;
     }
     IEnumerator Eating()
